@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Referéndums Italianos 2025: Guía Interactiva</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* Tailwind bg-slate-50 */
+        }
+        .nav-button {
+            padding: 0.75rem 1.5rem; /* Aumentado el padding para mejor toque */
+            margin: 0.25rem; /* Margen alrededor para evitar solapamiento en wrap */
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+            color: #4b5563; /* Tailwind text-gray-600 */
+            border: 1px solid transparent; /* Borde para mantener tamaño al hacer hover/active */
+        }
+        .nav-button.active {
+            background-color: #3b82f6; /* Tailwind bg-blue-600 */
+            color: white;
+            border-color: #2563eb; /* Tailwind border-blue-700 */
+        }
+        .nav-button:hover:not(.active) {
+            background-color: #e5e7eb; /* Tailwind bg-gray-200 */
+            border-color: #d1d5db; /* Tailwind border-gray-300 */
+        }
+        .content-section {
+            display: none;
+            padding: 1.5rem; /* Reducido padding para móviles */
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            margin-top: 1.5rem;
+        }
+        @media (min-width: 768px) { /* md breakpoint */
+            .content-section {
+                padding: 2rem; /* Padding original para pantallas más grandes */
+            }
+            .nav-button {
+                 margin: 0 0.25rem; /* Reset de margen horizontal para pantallas grandes */
+            }
+        }
+        .content-section.active {
+            display: block;
+        }
+        .referendum-card {
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .referendum-title {
+            font-size: 1.25rem; /* Tailwind text-xl, reducido para móviles */
+            line-height: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e5e7eb; /* Tailwind border-gray-200 */
+        }
+         @media (min-width: 768px) { /* md breakpoint */
+            .referendum-title {
+                font-size: 1.5rem; /* Tailwind text-2xl, tamaño original */
+                line-height: 2rem;
+            }
+        }
+
+        .quesito-bg-ciudadania { background-color: #E0F7FA; } /* Light Blue */
+        .quesito-border-ciudadania { border-left: 5px solid #00BCD4; }
+        .quesito-title-ciudadania { color: #007B8A; }
+
+        .quesito-bg-despidos { background-color: #E8F5E9; } /* Light Green */
+        .quesito-border-despidos { border-left: 5px solid #4CAF50; }
+        .quesito-title-despidos { color: #2E7D32; }
+
+        .quesito-bg-plazofijo { background-color: #FFFDE7; } /* Light Yellow */
+        .quesito-border-plazofijo { border-left: 5px solid #FFC107; }
+        .quesito-title-plazofijo { color: #FFA000; }
+        
+        .quesito-bg-subcontratacion { background-color: #FFF3E0; } /* Light Orange */
+        .quesito-border-subcontratacion { border-left: 5px solid #FF9800; }
+        .quesito-title-subcontratacion { color: #E65100; }
+
+        .quesito-bg-pequenasempresas { background-color: #E3F2FD; } /* Light Blue-Gray */
+        .quesito-border-pequenasempresas { border-left: 5px solid #2196F3; }
+        .quesito-title-pequenasempresas { color: #0D47A1; }
+
+        .vote-option-card {
+            background-color: rgba(255, 255, 255, 0.8); /* Aumentada opacidad para mejor legibilidad */
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* Sombra sutil */
+        }
+        h1, h2, h3 {
+            line-height: 1.3; /* Mejorar interlineado de títulos */
+        }
+    </style>
+</head>
+<body class="antialiased text-gray-800">
+    <div class="container mx-auto px-4 py-8 max-w-5xl"> <header class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-blue-700">¡Che, a votar! Los Referéndums en Italia 2025</h1>
+            <p class="text-md md:text-lg text-gray-600 mt-2">¡Atención! Los referéndums que se votan en Italia el 8 y 9 de junio de 2025 no son solo un montón de preguntas sueltas. ¡Para nada! Son el reflejo de un montón de líos políticos, sociales y económicos que Italia viene arrastrando hace años. Por eso, la gente está dividida y busca soluciones directas a través del voto.</p>
+        </header>
+
+        <nav id="navigation" class="flex flex-wrap justify-center mb-6 bg-white p-2 md:p-3 rounded-lg shadow-md">
+            <button class="nav-button active" data-target="overview">Introducción</button>
+            <button class="nav-button" data-target="quesito5">Ciudadanía</button>
+            <button class="nav-button" data-target="quesito1">Despidos</button>
+            <button class="nav-button" data-target="quesito3">Contratos Plazo Fijo</button>
+            <button class="nav-button" data-target="quesito4">Subcontratación</button>
+            <button class="nav-button" data-target="quesito2">Pequeñas Emp.</button>
+        </nav>
+
+        <main id="contentArea">
+            <section id="overview" class="content-section active">
+                <h2 class="text-2xl md:text-3xl font-bold mb-6 text-blue-600">¿De dónde vienen estos quilombos?</h2>
+                <ul class="list-disc ml-6 mb-4 text-base md:text-lg leading-relaxed">
+                    <li class="mb-2">
+                        <strong class="text-gray-800">El famoso "Jobs Act" y el laburo precario:</strong> ¿Te acordás del "Jobs Act" de 2015? Bueno, esa reforma laboral buscaba que fuera más fácil contratar, ¡pero armó un lío bárbaro! Mucha gente siente que ahora hay más laburo precario y menos protección si te echan. ¡Un temazo que divide a la gente!
+                    </li>
+                    <li class="mb-2">
+                        <strong class="text-gray-800">La inmigración y la integración:</strong> Italia es la puerta de entrada para un montón de gente que viene de África, ¡especialmente por Sicilia! Esto generó un debate enorme sobre la ciudadanía y si los recién llegados, que a veces tienen otras culturas y religiones, están "ocupando" el país. ¡Un tema que calienta la discusión y genera mucha bronca!
+                    </li>
+                    <li class="mb-2">
+                        <strong class="text-gray-800">Seguridad y responsabilidad en el trabajo:</strong> ¡Los accidentes laborales son un dolor de cabeza! Y cuando hay subcontrataciones, ¿quién se hace cargo si pasa algo? La gente quiere saber quién es el responsable final para que los trabajadores estén más seguros y no queden a la deriva.
+                    </li>
+                </ul>
+                <h2 class="text-2xl md:text-3xl font-bold mb-6 text-blue-600">Los Referéndums Abrogativos: ¡La gente tiene la última palabra!</h2>
+                <p class="mb-4 text-base md:text-lg leading-relaxed">La Constitución italiana (Artículo 75) permite que los ciudadanos eliminen una ley, ¡o parte de ella! Pero ojo, para que valga, tiene que votar más de la mitad de la gente habilitada, y la mayoría tiene que decir que "sí" a borrarla. ¡Por eso, los que están a favor y en contra se matan para que la gente vaya a votar y los apoye!</p>
+                <p class="mt-6 text-base md:text-lg leading-relaxed">La Confederación General Italiana del Trabajo (CGIL) es la principal impulsora de los cuatro referéndums relacionados con el trabajo. El quinto referéndum, sobre la ciudadanía, fue promovido por diversos partidos y asociaciones de la sociedad civil.</p>
+                <p class="mt-6 text-base md:text-lg leading-relaxed">Esta guía te ayudará a entender cada uno de los cinco referéndums, explicando qué implica votar "SÍ" o "NO", quiénes son sus principales impulsores, sus razones morales subyacentes y las implicaciones para la sociedad italiana.</p>
+            </section>
+
+            <section id="quesito5" class="content-section referendum-card quesito-bg-ciudadania quesito-border-ciudadania">
+                <h2 class="referendum-title quesito-title-ciudadania">1. Ciudadanía: Reducción del Tiempo de Residencia (Quesito n.º 5)</h2>
+                <div class="mb-6">
+                    <h3 class="text-lg md:text-xl font-semibold mb-2">Objeto de la Abrogación:</h3>
+                    <p class="text-sm md:text-base">Este referéndum busca abrogar la parte de la ley que establece un requisito de 10 años de residencia legal en Italia para que los extranjeros adultos no comunitarios puedan solicitar la ciudadanía italiana.</p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-4 md:gap-6">
+                    <div class="vote-option-card border-2 border-green-500">
+                        <h3 class="text-xl md:text-2xl font-bold text-green-600 mb-3">Si votas "SÍ" 👍</h3>
+                        <p class="mb-2 text-sm md:text-base"><strong class="font-semibold">Implicación:</strong> Reducir el período de residencia legal de 10 a 5 años para solicitar la ciudadanía (extranjeros no UE).</p>
+                        <p class="mb-2 text-sm md:text-base"><strong class="font-semibold">Argumento:</strong> Facilita integración, alinea con otros países UE, beneficia a menores.</p>
+                        <p class="text-sm md:text-base"><strong class="font-semibold">Impulsores:</strong> Partidos como Más Europa, Possibile, PSI, Radicales, Rifondazione, asoc. civiles, CGIL.</p>
+                    </div>
+                    <div class="vote-option-card border-2 border-red-500">
+                        <h3 class="text-xl md:text-2xl font-bold text-red-600 mb-3">Si votas "NO" 👎</h3>
+                        <p class="mb-2 text-sm md:text-base"><strong class="font-semibold">Implicación:</strong> Mantener requisito de 10 años de residencia.</p>
+                        <p class="mb-2 text-sm md:text-base"><strong class="font-semibold">Argumento (Inferido):</strong> Preservar identidad nacional, integración gradual, capacidad estatal.</p>
+                         <p class="text-sm md:text-base"><strong class="font-semibold">Impulsores:</strong> Sectores pro-control migratorio estricto.</p>
+                    </div>
+                </div>
+                <div class="mt-6">
+                    <h3 class="text-lg md:text-xl font-semibold mb-2">Razones Morales Principales:</h3>
+                    <p class="mb-2 text-sm md:text-base"><strong>"SÍ":</strong> Justicia social, integración, inclusión, dignidad humana.</p>
+                    <p class="text-sm md:text-base"><strong>"NO" (Inferido):</strong> Identidad nacional, integración gradual, seguridad.</p>
+                </div>
+                <div class="mt-6">
+                    <h3 class="text-lg md:text-xl font-semibold mb-2">Implicaciones para la Sociedad Italiana:</h3>
+                    <p class="text-sm md:text-base">"SÍ": Sociedad más inclusiva. "NO": Mantiene barreras actuales, posible marginalización.</p>
+                </div>
+            </section>
+
+            <section id="quesito1" class="content-section referendum-card quesito-bg-despidos quesito-border-despidos">
+                <h2 class="referendum-title quesito-title-despidos">2. Despidos Ilegítimos: Contrato a Tutelas Crecientes (Quesito n.º 1)</h2>
+                <div class="mb-6">
+                    <h3 class="text-lg md:text-xl font-semibold mb-2">Objeto de la Abrogación:</h3>
+                    <p class="text-sm md:text-base">Busca la abrogación total del Decreto del Jobs Act que eliminó el reintegro por despido ilegítimo (post 7/3/2015, empresas >15 empleados), reemplazándolo por indemnización.</p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-4 md:gap-6">
+                     <div class="vote-option-card border-2 border-green-500">
+                        <h3 class="text-xl md:text-2xl font-bold text-green-600 mb-3">Si votas "SÍ" 👍</h3>
+                        <p class="mb-2 text-sm md:text-base"><strong class="font-semibold">Implicación:</strong> Restaurar la posibilidad de reintegro al puesto para todos.</p>
+                        <p class="mb-2 text-sm md:text-base"><strong class="font-semibold">Argumento:</strong> Misma protección para todos, eliminar desigualdad del Jobs Act.</p>
+                        <p class="text-sm md:text-base"><strong class="font-semibold">Impulsores:</strong> CGIL y asoc. de trabajadores.</p>
+                    </div>
+                    <div class="vote-option-card border-2 border-red-500">
+                        <h3 class="text-xl md:text-2xl font-bold text-red-600 mb-3">Si votas "NO" 👎</h3>
+                        <p class="mb-2 text-sm md:text-base"><strong class="font-semibold">Implicación:</strong> Mantener indemnización sin reintegro (contratados post-2015).</p>
+                        <p class="mb-2 text-sm md:text-base"><strong class="font-semibold">Argumento:</strong> Preservar flexibilidad empresarial, fomentar inversión y empleo.</p>
+                        <p class="text-sm md:text-base"><strong class="font-semibold">Impulsores:</strong> Sectores empresariales, partidos pro-flexibilidad.</p>
+                    </div>
+                </div>
+                <div class="mt-6">
+                    <h3 class="text-lg md:text-xl font-semibold mb-2">Razones Morales Principales:</h3>
+                    <p class="mb-2 text-sm md:text-base"><strong>"SÍ":</strong> Justicia, dignidad, igualdad laboral, combatir precariedad.</p>
+                    <p class="text-sm md:text-base"><strong>"NO":</strong> Eficiencia económica, estabilidad empresarial, fomento de contrataciones.</p>
+                </div>
+                <div class="mt-6">
+                    <h3 class="text-lg md:text-xl font-semibold mb-2">Implicaciones para la Sociedad Italiana:</h3>
+                    <p class="text-sm md:text-base">"SÍ": Mayor protección laboral, posible rigidez para empresas. "NO": Mantiene flexibilidad, menor protección individual.</p>
+                </div>
+            </section>
+
+            <section id="quesito3" class="content-section referendum-card quesito-bg-plazofijo quesito-border-plazofijo">
+                <h2 class="referendum-title quesito-title-plazofijo">3. Contratos a Plazo Fijo: Duración y Prórrogas (Quesito n.º 3)</h2>
+                <div class="mb-6">
+                    <h3 class="text-lg md:text-xl font-semibold mb-2">Objeto de la Abrogación:</h3>
+                    <p class="text-sm md:text-base">Busca la abrogación parcial de normas del Jobs Act que permiten contratos a término de hasta 12 meses sin "causale" (justificación objetiva).</p>
+                </div>
+                 <div class="grid md:grid-cols-2 gap-4 md:gap-6">
+                    <div class="vote-option-card border-2 border-green-500">
+                        <h3 class="text-xl md:text-2xl font-bold text-green-600 mb-3">Si votas "SÍ" 👍</h3>
+                        <p class="mb-2 text-sm md:text-base"><strong class="font-semibold">Implicación:</strong> Reintroducir obligación de "causale" para contratos a término (<12 meses).</p>
+                        <p class="mb-2 text-sm md:text-base"><strong class="font-semibold">Argumento:</strong> Limitar abuso de contratos temporales, fomentar estabilidad laboral.</p>
+                        <p class="text-sm md:text-base"><strong class="font-semibold">Impulsores:</strong> CGIL y asoc. de trabajadores.</p>
+                    </div>
+                    <div class="vote-option-card border-2 border-red-500">
+                        <h3 class="text-xl md:text-2xl font-bold text-red-600 mb-3">Si votas "NO" 👎</h3>
+                        <p class="mb-2 text-sm md:text-base"><strong class="font-semibold">Implicación:</strong> Mantener contratos a término de hasta 12 meses sin "causale".</p>
+                        <p class="mb-2 text-sm md:text-base"><strong class="font-semibold">Argumento:</strong> Preservar flexibilidad empresarial para adaptar personal.</p>
+                        <p class="text-sm md:text-base"><strong class="font-semibold">Impulsores:</strong> Sectores empresariales, partidos pro-flexibilidad.</p>
+                    </div>
+                </div>
+                <div class="mt-6">
+                    <h3 class="text-lg md:text-xl font-semibold mb-2">Razones Morales Principales:</h3>
+                    <p class="mb-2 text-sm md:text-base"><strong>"SÍ":</strong> Dignidad del trabajo, lucha contra precariedad ("precariedad es pérdida de libertad").</p>
+                    <p class="text-sm md:text-base"><strong>"NO":</strong> Libertad económica, eficiencia, competitividad, creación de empleo.</p>
+                </div>
+                <div class="mt-6">
+                    <h3 class="text-lg md:text-xl font-semibold mb-2">Implicaciones para la Sociedad Italiana:</h3>
+                    <p class="text-sm md:text-base">"SÍ": Menos contratos temporales, más estabilidad. "NO": Mantiene flexibilidad actual.</p>
+                </div>
+            </section>
+
+            <section id="quesito4" class="content-section referendum-card quesito-bg-subcontratacion quesito-border-subcontratacion">
+                 <h2 class="referendum-title quesito-title-subcontratacion">4. Subcontratación: Responsabilidad Solidaria (Quesito n.º 4)</h2>
+                <div class="mb-6">
+                    <h3 class="text-lg md:text-xl font-semibold mb-2">Objeto de la Abrogación:</h3>
+                    <p class="text-sm md:text-base">Busca la abrogación parcial de norma que limita responsabilidad solidaria del comitente/contratista por accidentes laborales en subcontratos con riesgos específicos.</p>
+                </div>
+                 <div class="grid md:grid-cols-2 gap-4 md:gap-6">
+                    <div class="vote-option-card border-2 border-green-500">
+                        <h3 class="text-xl md:text-2xl font-bold text-green-600 mb-3">Si votas "SÍ" 👍</h3>
+                        <p class="mb-2 text-sm md:text-base"><strong class="font-semibold">Implicación:</strong> Todos en la cadena serían siempre solidariamente responsables por accidentes.</p>
+                        <p class="mb-2 text-sm md:text-base"><strong class="font-semibold">Argumento:</strong> Aumentar seguridad laboral, incentivar prevención en toda la cadena.</p>
+                        <p class="text-sm md:text-base"><strong class="font-semibold">Impulsores:</strong> CGIL y asoc. de trabajadores.</p>
+                    </div>
+                    <div class="vote-option-card border-2 border-red-500">
+                        <h3 class="text-xl md:text-2xl font-bold text-red-600 mb-3">Si votas "NO" 👎</h3>
+                        <p class="mb-2 text-sm md:text-base"><strong class="font-semibold">Implicación:</strong> Mantener exclusión de responsabilidad solidaria en ciertos casos.</p>
+                        <p class="mb-2 text-sm md:text-base"><strong class="font-semibold">Argumento:</strong> Evitar sobrecargar comitentes, no ralentizar inversiones.</p>
+                        <p class="text-sm md:text-base"><strong class="font-semibold">Impulsores:</strong> Sectores empresariales.</p>
+                    </div>
+                </div>
+                <div class="mt-6">
+                    <h3 class="text-lg md:text-xl font-semibold mb-2">Razones Morales Principales:</h3>
+                    <p class="mb-2 text-sm md:text-base"><strong>"SÍ":</strong> Protección vida/salud trabajadores, "cadena de seguridad y legalidad".</p>
+                    <p class="text-sm md:text-base"><strong>"NO":</strong> Viabilidad económica, eficiencia, evitar paralización de suministros.</p>
+                </div>
+                <div class="mt-6">
+                    <h3 class="text-lg md:text-xl font-semibold mb-2">Implicaciones para la Sociedad Italiana:</h3>
+                    <p class="text-sm md:text-base">"SÍ": Menos accidentes, más costos/burocracia. "NO": Mantiene situación actual, posible menor protección.</p>
+                </div>
+            </section>
+
+            <section id="quesito2" class="content-section referendum-card quesito-bg-pequenasempresas quesito-border-pequenasempresas">
+                <h2 class="referendum-title quesito-title-pequenasempresas">5. Pequeñas Empresas: Despidos e Indemnización (Quesito n.º 2)</h2>
+                <div class="mb-6">
+                    <h3 class="text-lg md:text-xl font-semibold mb-2">Objeto de la Abrogación:</h3>
+                    <p class="text-sm md:text-base">Busca la abrogación parcial de ley que limita indemnización por despido ilegítimo en pequeñas empresas (<16 empleados).</p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-4 md:gap-6">
+                    <div class="vote-option-card border-2 border-green-500">
+                        <h3 class="text-xl md:text-2xl font-bold text-green-600 mb-3">Si votas "SÍ" 👍</h3>
+                        <p class="mb-2 text-sm md:text-base"><strong class="font-semibold">Implicación:</strong> Eliminar límite máximo de indemnización. Juez determinaría monto.</p>
+                        <p class="mb-2 text-sm md:text-base"><strong class="font-semibold">Argumento:</strong> "Misma justicia para todos", independientemente del tamaño de empresa.</p>
+                        <p class="text-sm md:text-base"><strong class="font-semibold">Impulsores:</strong> CGIL y asoc. de trabajadores.</p>
+                    </div>
+                    <div class="vote-option-card border-2 border-red-500">
+                        <h3 class="text-xl md:text-2xl font-bold text-red-600 mb-3">Si votas "NO" 👎</h3>
+                        <p class="mb-2 text-sm md:text-base"><strong class="font-semibold">Implicación:</strong> Mantener límite máximo de indemnización para pequeñas empresas.</p>
+                        <p class="mb-2 text-sm md:text-base"><strong class="font-semibold">Argumento:</strong> Proteger PyMEs (económicamente frágiles) de indemnizaciones elevadas.</p>
+                        <p class="text-sm md:text-base"><strong class="font-semibold">Impulsores:</strong> Sectores empresariales.</p>
+                    </div>
+                </div>
+                <div class="mt-6">
+                    <h3 class="text-lg md:text-xl font-semibold mb-2">Razones Morales Principales:</h3>
+                    <p class="mb-2 text-sm md:text-base"><strong>"SÍ":</strong> Justicia, igualdad de trato, combatir "fuerte estado de sujeción" de trabajadores.</p>
+                    <p class="text-sm md:text-base"><strong>"NO":</strong> Protección PyME (motor económico), evitar litigios desestabilizadores.</p>
+                </div>
+                <div class="mt-6">
+                    <h3 class="text-lg md:text-xl font-semibold mb-2">Implicaciones para la Sociedad Italiana:</h3>
+                    <p class="text-sm md:text-base">"SÍ": Mejor protección en PyMEs, posible preocupación por viabilidad. "NO": Mantiene situación actual.</p>
+                </div>
+            </section>
+        </main>
+
+        <footer class="text-center mt-12 py-6 border-t border-gray-300">
+            <p class="text-gray-600 text-sm">&copy; 2025 Guía Interactiva de Referéndums Italianos. Basada en el reporte "Referéndums Populares en Italia (8 y 9 de junio de 2025): Un Análisis Detallado".</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const navButtons = document.querySelectorAll('.nav-button');
+            const contentSections = document.querySelectorAll('.content-section');
+            const initialActiveTarget = 'overview'; // Always start with overview
+
+            // Function to activate a section
+            function activateSection(targetId) {
+                // Fallback to overview if targetId is not found or is invalid
+                const targetElement = document.getElementById(targetId);
+                const finalTargetId = targetElement ? targetId : initialActiveTarget;
+
+                navButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.dataset.target === finalTargetId) {
+                        btn.classList.add('active');
+                    }
+                });
+                contentSections.forEach(section => {
+                    section.classList.remove('active'); // Hide all sections
+                    if (section.id === finalTargetId) {
+                        section.classList.add('active'); // Show the target section
+                    }
+                });
+            }
+
+            // Set initial active section
+            activateSection(initialActiveTarget);
+            
+            // Add click event listeners to navigation buttons
+            navButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const targetId = this.dataset.target;
+                    activateSection(targetId);
+                    // The line window.location.hash = targetId; was removed to prevent security errors.
+                    // Navigation state is managed purely by class toggling.
+                });
+            });
+            // The hashchange event listener was also removed as we are not manipulating URL hash.
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+# 1. Inicializa git si aún no lo hiciste
+git init
+
+# 2. Agrega todos los archivos y haz un commit inicial
+git add .
+git commit -m "Primer commit"
+
+# 3. Crea el repositorio en GitHub desde la web (https://github.com/new)
+#    - Ponle un nombre (por ejemplo: pagina-consular)
+#    - NO inicialices con README ni .gitignore
+
+# 4. Conecta tu carpeta local con el repositorio remoto (reemplaza TU_USUARIO y TU_REPO)
+git remote add origin https://github.com/TU_USUARIO/TU_REPO.git
+
+# 5. Sube tu código
+git branch -M main
+git push -u origin main
+# 6. Configura tu usuario de Git (solo la primera vez)
+git config --global user.name "Tu Nombre"
+git config --global user.email "tuemail@ejemplo.com"
+
+# 7. (Opcional) Verifica la configuración
+git config --listgi
